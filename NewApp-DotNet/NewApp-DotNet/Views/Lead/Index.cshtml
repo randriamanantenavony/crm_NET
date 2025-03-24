@@ -1,0 +1,52 @@
+@model List<Lead>
+
+@{
+    ViewData["Title"] = "Liste des Leads";
+}
+
+<!-- En-tête de la page avec fond bleu pastel -->
+<div class="container mt-4">
+
+
+    <!-- Tableau des leads -->
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color: #457b9d; color: white;">
+                    <th>Lead ID</th>
+                    <th>Nom</th>
+                    <th>Status</th>
+                    <th>Téléphone</th>
+                    <th>Manager</th>
+                    <th>Client</th>
+                    <th>Créé le</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lead in Model)
+                {
+                    <tr>
+                        <td>@lead.LeadId</td>
+                        <td>@lead.Name</td>
+                        <td>@lead.Status</td>
+                        <td>@lead.Phone</td>
+                        <td>@lead.Manager?.Username</td>
+                        <td>@lead.Customer?.name</td>
+                        <td>@lead.CreatedAt.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Pied de page -->
+<footer class="bg-light text-center text-lg-start" style="background-color: #a8dadc;">
+    <div class="text-center p-3" style="color: #1d3557;">
+        © 2025 Ticketing System. Tous droits réservés.
+    </div>
+</footer>
+
+ <a href="http://localhost:5077/Dashboard" class="btn btn-outline-primary shadow-sm">
+            ⬅️ Retour au Dashboard
+        </a>
