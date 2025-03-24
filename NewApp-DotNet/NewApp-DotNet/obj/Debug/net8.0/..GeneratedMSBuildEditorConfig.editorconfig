@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet
 build_property._RazorSourceGeneratorDebug = 
 
+[E:/Studies/S6/crm_NET/NewApp-DotNet/NewApp-DotNet/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Studies/S6/crm_NET/NewApp-DotNet/NewApp-DotNet/Views/GlobalSettings/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2xvYmFsU2V0dGluZ3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
