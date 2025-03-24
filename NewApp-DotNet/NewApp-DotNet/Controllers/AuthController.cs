@@ -49,7 +49,7 @@ public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
         var user = JsonSerializer.Deserialize<User>(jsonResponse, options);
 
         // Rediriger vers la page Dashboard en cas de succès
-        return RedirectToAction("Dashboard", "Home");
+        return RedirectToAction("Index", "Dashboard");
     }
     else
     {

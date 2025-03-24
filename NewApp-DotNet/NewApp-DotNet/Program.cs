@@ -6,8 +6,11 @@ builder.Services.AddHttpClient<GlobalSettingsController>();
 
 // Enregistrer HttpClient
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<DashboardService>();
+
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -17,7 +20,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

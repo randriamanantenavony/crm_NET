@@ -1,0 +1,163 @@
+@model TotalCount
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc; /* Couleur de fond douce */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            padding: 30px 0;
+        }
+
+        .box {
+            width: 30%;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce */
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-10px); /* Animation au survol */
+        }
+
+        .customer {
+            background-color: #74c7a8; /* Couleur verte claire */
+        }
+
+        .ticket {
+            background-color: #ffb400; /* Couleur orange clair */
+        }
+
+        .lead {
+            background-color: #3498db; /* Couleur bleu clair */
+        }
+
+        .box h3 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .box p {
+            margin: 10px 0;
+            font-size: 36px; /* Plus grand pour la valeur */
+        }
+
+        .box .details {
+            font-size: 18px;
+            color: #f4f4f4;
+        }
+
+        .chart-container {
+            width: 60%;
+            height: 450px;
+            margin: 50px auto 0;
+        }
+
+        /* Centrer le texte du graphique */
+        .chart-container canvas {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box customer">
+        <h3>Total Customers</h3>
+        <p>@Model.customerCount</p>
+        <p class="details">Clients enregistrés jusqu'à aujourd'hui</p>
+    </div>
+
+    <div class="box ticket">
+        <h3>Total Tickets</h3>
+        <p>@Model.ticketCount</p>
+        <p class="details">Tickets générés et en cours de traitement</p>
+    </div>
+
+    <div class="box lead">
+        <h3>Total Leads</h3>
+        <p>@Model.leadCount</p>
+        <p class="details">Leads générés par les campagnes</p>
+    </div>
+</div>
+
+<!-- Graphique Chart.js -->
+<div class="chart-container">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar', // Choisir le type de graphique (barres)
+        data: {
+            labels: ['Customers', 'Tickets', 'Leads'], // Les catégories
+            datasets: [{
+                label: 'Total Count',
+                data: [@Model.customerCount, @Model.ticketCount, @Model.leadCount], // Données dynamiques
+                backgroundColor: [
+                    '#74c7a8', // Couleur verte claire
+                    '#ffb400', // Couleur orange clair
+                    '#3498db'  // Couleur bleu clair
+                ],
+                borderColor: [
+                    '#56b597', // Couleur verte plus foncée
+                    '#e68900', // Couleur orange plus foncée
+                    '#2980b9'  // Couleur bleue plus foncée
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
