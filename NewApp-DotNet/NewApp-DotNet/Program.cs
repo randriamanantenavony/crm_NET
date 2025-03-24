@@ -3,6 +3,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<GlobalSettingsController>();
+builder.Services.AddHttpClient<CustomerService>();
+builder.Services.AddHttpClient<TicketService>();
+builder.Services.AddHttpClient<LeadService>();
+
 
 // Enregistrer HttpClient
 builder.Services.AddHttpClient();
