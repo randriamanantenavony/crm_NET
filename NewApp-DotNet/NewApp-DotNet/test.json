@@ -1,0 +1,55 @@
+{
+    "id": 62,
+    "username": "tsiryrakotonirina23",
+    "email": "tsiryrakotonirina23@gmail.com",
+    "password": "$2a$10$9GT/5Yf/X7FeVv3gCL2VaugyIITCpKPl8gMhsFV4Y0kpEz44pagnK",
+    "status": "active",
+    "token": null,
+    "hireDate": null,
+    "createdAt": "2025-03-20T16:44:33.152912",
+    "updatedAt": null,
+    "oauthUser": {
+        "id": 28,
+        "grantedScopes": [
+            "openid",
+            "profile",
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/drive.file",
+            "https://www.googleapis.com/auth/gmail.modify",
+            "email"
+        ],
+        "accessToken": "ya29.a0AeXRPp7mgqgr4iR4_HYsmEMYaCc0cw-aeQNQH8rP5qnGo0mK8vPf6BvtgM5JvZYwezorYLSiQfA-wNPRvikwrQRH3hQB0C5c2Aes-zhjNARQQiXemnkJ3zCKiunJfX4_1-03mmMf_Lwuenc0JchA8P9gwOS_ryw7VzpW-NBw3waCgYKAUwSARISFQHGX2Miu415lCmbh4Zfi2zlIUktxg0177",
+        "accessTokenIssuedAt": "2025-03-20T13:58:31.829778Z",
+        "accessTokenExpiration": "2025-03-23T11:41:48.620862Z",
+        "refreshToken": "1//03qGNI0QH-7L1CgYIARAAGAMSNwF-L9IrcoPTF8YU6VwusAUlqex4f1HfNc7VPEEDXMM7wfTRQq5p9WALrqTSBCgzisoYbsMd6mc",
+        "refreshTokenIssuedAt": "2025-03-20T13:58:31.829778Z",
+        "refreshTokenExpiration": null,
+        "email": "tsiryrakotonirina23@gmail.com"
+    },
+    "roles": [
+        {
+            "id": 2,
+            "name": "ROLE_EMPLOYEE"
+        }
+    ],
+    "userProfile": {
+        "id": 37,
+        "firstName": "Tsiry",
+        "lastName": "Rakotonirina",
+        "country": null,
+        "phone": null,
+        "position": null,
+        "department": null,
+        "salary": null,
+        "status": "inactive",
+        "facebook": null,
+        "twitter": null,
+        "youtube": null,
+        "oathUserImageLink": "https://lh3.googleusercontent.com/a/ACg8ocL-iRTCZxNF-s_sjkavoZ8EuAnnGC7DKre6i7nTY4Q4gGGlrA=s96-c",
+        "userImage": null,
+        "bio": null,
+        "address": null
+    },
+    "passwordSet": true,
+    "inactiveUser": false
+}
