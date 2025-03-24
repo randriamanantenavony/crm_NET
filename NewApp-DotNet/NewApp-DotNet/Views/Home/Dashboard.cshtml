@@ -1,103 +1,185 @@
-@{
-    ViewData["Title"] = "Tableau de bord";
-}
+@model DashboardViewModel
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Tableau de bord</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
 
-    <div class="row">
-        <!-- Premier graphique : Diagramme en barres -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    Nombre de ventes par mois
-                </div>
-                <div class="card-body">
-                    <canvas id="salesChart" width="400" height="200"></canvas>
-                </div>
-            </div>
-        </div>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            padding: 30px 0;
+        }
 
-        <!-- Deuxième graphique : Diagramme circulaire -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    Répartition des ventes par catégorie
-                </div>
-                <div class="card-body">
-                    <canvas id="categoryChart" width="400" height="200"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        .box {
+            width: 30%;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Données en dur pour le premier graphique (diagramme en barres)
-        const salesData = {
-            labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+        .box:hover {
+            transform: translateY(-10px);
+        }
+
+        .customer {
+            background-color: #74c7a8;
+        }
+
+        .ticket {
+            background-color: #ffb400;
+        }
+
+        .lead {
+            background-color: #3498db;
+        }
+
+        .box h3 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .box p {
+            margin: 10px 0;
+            font-size: 36px;
+        }
+
+        .box .details {
+            font-size: 18px;
+            color: #f4f4f4;
+        }
+
+        .chart-container {
+            width: 60%;
+            height: 450px;
+            margin: 50px auto 0;
+        }
+
+        .chart-container canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .client-stats-table {
+            width: 80%;
+            margin: 50px auto;
+            border-collapse: collapse;
+        }
+
+        .client-stats-table th, .client-stats-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .client-stats-table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .client-stats-table td {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Section Total Counts -->
+
+
+<!-- Section Client Stats -->
+<h2 style="text-align: center;">Client Statistics</h2>
+<table class="client-stats-table">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Total Budget</th>
+            <th>Total Depense</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.ClientStats)
+        {
+            <tr>
+                <td>@client.userId</td>
+                <td>@client.name</td>
+                <td>$@client.totalBudget</td>
+                <td>$@client.totalDepense</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Customers', 'Tickets', 'Leads'],
             datasets: [{
-                label: 'Nombre de ventes',
-                data: [65, 59, 80, 81, 56, 55],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                label: 'Total Count',
+                data: [@Model.TotalCount.customerCount, @Model.TotalCount.ticketCount, @Model.TotalCount.leadCount],
+                backgroundColor: [
+                    '#74c7a8', // Couleur verte claire
+                    '#ffb400', // Couleur orange clair
+                    '#3498db'  // Couleur bleu clair
+                ],
+                borderColor: [
+                    '#56b597', // Couleur verte plus foncée
+                    '#e68900', // Couleur orange plus foncée
+                    '#2980b9'  // Couleur bleue plus foncée
+                ],
+                borderWidth: 2
             }]
-        };
-
-        // Configuration du premier graphique
-        const salesConfig = {
-            type: 'bar',
-            data: salesData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 16
+                        }
                     }
                 }
             }
-        };
+        }
+    });
+</script>
 
-        // Créer le premier graphique
-        const salesChart = new Chart(
-            document.getElementById('salesChart'),
-            salesConfig
-        );
-
-        // Données en dur pour le deuxième graphique (diagramme circulaire)
-        const categoryData = {
-            labels: ['Électronique', 'Vêtements', 'Alimentation', 'Livres'],
-            datasets: [{
-                label: 'Répartition des ventes',
-                data: [300, 150, 100, 50],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 205, 86, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-
-        // Configuration du deuxième graphique
-        const categoryConfig = {
-            type: 'pie',
-            data: categoryData,
-        };
-
-        // Créer le deuxième graphique
-        const categoryChart = new Chart(
-            document.getElementById('categoryChart'),
-            categoryConfig
-        );
-    </script>
-}
+</body>
+</html>
