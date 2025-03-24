@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Studies\\S6\\NewApp-DotNet\\NewApp-DotNet\\..csproj",
+      "projectUniqueName": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\..csproj",
       "projectName": ".",
-      "projectPath": "E:\\Studies\\S6\\NewApp-DotNet\\NewApp-DotNet\\..csproj",
+      "projectPath": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\..csproj",
       "packagesPath": "C:\\Users\\SAROBIDY\\.nuget\\packages\\",
-      "outputPath": "E:\\Studies\\S6\\NewApp-DotNet\\NewApp-DotNet\\obj\\",
+      "outputPath": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\SAROBIDY\\AppData\\Roaming\\NuGet\\NuGet.Config"
