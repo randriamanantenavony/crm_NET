@@ -86,6 +86,12 @@
             transform: none;
         }
 
+        .chart-container {
+            width: 100%;
+            height: calc(100% - 40px); /* 40px pour le titre */
+            position: relative;
+        }
+
        
     </style>
 </head>
@@ -96,18 +102,21 @@
         <h3>Total Customers</h3>
         <p>@Model.TotalCount.customerCount</p>
         <p class="details">Clients enregistrés jusqu'à aujourd'hui</p>
+        <a href="" style="text-decoration: none; color: #f4f7fc;">voir details</a>
     </div>
 
     <div class="box ticket">
         <h3>Total Tickets</h3>
         <p>@Model.TotalCount.ticketCount</p>
         <p class="details">Tickets générés et en cours de traitement</p>
+        <a href="" style="text-decoration: none; color: #f4f7fc;">voir details</a>
     </div>
 
     <div class="box lead">
         <h3>Total Leads</h3>
         <p>@Model.TotalCount.leadCount</p>
         <p class="details">Leads générés par les campagnes</p>
+        <a href="" style="text-decoration: none; color: #f4f7fc;">voir details</a>
     </div>
 </div>
 
@@ -123,12 +132,17 @@
         <div class="chart-title">Budget vs Dépenses par Client</div>
         <canvas id="clientStatsChart"></canvas>
     </div>
-</div>
 
-<div class="chart-wrapper">
-    <div class="chart-title">Statut des Tickets</div>
-    <div class="chart-container">
+    <!-- Troisième graphique: Statut des Tickets -->
+    <div class="chart-wrapper">
+        <div class="chart-title">Statut des Tickets</div>
         <canvas id="ticketStatusChart"></canvas>
+    </div>
+
+    <!-- Quatrième graphique: Statut des Leads -->
+    <div class="chart-wrapper">
+        <div class="chart-title">Statut des Leads</div>
+        <canvas id="leadStatusChart"></canvas>
     </div>
 </div>
 
@@ -203,23 +217,25 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      
-       console.log("Données TicketStatus:", @Html.Raw(Json.Serialize(Model.TicketStatusCounts)));
-        // Vérifiez d'abord si les données existent
-        var ticketStatusData = @Html.Raw(Json.Serialize(Model.TicketStatusCounts));
+        console.log("Données TicketStatus:", @Html.Raw(Json.Serialize(Model.TicketStatusCounts)));
         
-        // Créez le graphique seulement si des données existent
+        // Graphique des statuts de tickets
+        var ticketStatusData = @Html.Raw(Json.Serialize(Model.TicketStatusCounts));
         if(ticketStatusData && ticketStatusData.length > 0) {
-            var ctx = document.getElementById('ticketStatusChart').getContext('2d');
-            new Chart(ctx, {
+            var ticketCtx = document.getElementById('ticketStatusChart').getContext('2d');
+            new Chart(ticketCtx, {
                 type: 'pie',
                 data: {
                     labels: ticketStatusData.map(item => item.status),
                     datasets: [{
                         data: ticketStatusData.map(item => item.ticketCount),
-                        backgroundColor: [
-                            '#FF5733', '#33FF57', '#3357FF', 
-                            '#F4A300', '#A833FF', '#33FFF5'
+                       backgroundColor: [
+                            '#B3B3FF', // Bleu pastel
+                            '#B3FFFF',
+                            '#FFE0B3', // Jaune pastel
+                            '#E0B3FF', // Violet pastel
+                            '#FFB3B3', // Rouge pastel
+                            '#B3FFB3', // Vert pastel
                         ],
                         borderWidth: 1
                     }]
@@ -245,8 +261,51 @@
             console.warn("Aucune donnée de statut de ticket disponible");
             document.getElementById('ticketStatusChart').closest('.chart-wrapper').style.display = 'none';
         }
-    });
 
+        // Graphique des statuts de leads
+        var leadStatusData = @Html.Raw(Json.Serialize(Model.LeadStatusCounts));
+        console.log("lead",leadStatusData);
+        if(leadStatusData && leadStatusData.length > 0) {
+            var leadCtx = document.getElementById('leadStatusChart').getContext('2d');
+            new Chart(leadCtx, {
+                type: 'pie',
+                data: {
+                    labels: leadStatusData.map(item => item.status),
+                    datasets: [{
+                        data: leadStatusData.map(item => item.leadCount),
+                        backgroundColor: [
+                            '#FFB3B3', // Rouge pastel
+                            '#B3FFB3', // Vert pastel
+                            '#B3B3FF', // Bleu pastel
+                            '#FFE0B3', // Jaune pastel
+                            '#E0B3FF', // Violet pastel
+                            '#B3FFFF'  // Cyan pastel
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw} leads`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn("Aucune donnée de statut de lead disponible");
+            document.getElementById('leadStatusChart').closest('.chart-wrapper').style.display = 'none';
+        }
+    });
 </script>
 
 </body>

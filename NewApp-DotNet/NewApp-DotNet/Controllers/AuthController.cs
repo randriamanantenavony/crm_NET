@@ -48,11 +48,14 @@ public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
         };
         var user = JsonSerializer.Deserialize<User>(jsonResponse, options);
 
+        Console.WriteLine("tu es dans le if");
         // Rediriger vers la page Dashboard en cas de succès
-        return RedirectToAction("Index", "Dashboard");
+        return RedirectToAction("Index","Dashboard");
     }
+
     else
     {
+        Console.WriteLine("else");
         // Rediriger vers la page d'index avec un message d'erreur en cas d'échec
         TempData["ErrorMessage"] = "Erreur lors de l'authentification. Veuillez vérifier vos identifiants.";
         return RedirectToAction("Index", "Home");

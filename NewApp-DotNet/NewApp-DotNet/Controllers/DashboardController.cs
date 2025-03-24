@@ -16,13 +16,15 @@ public class DashboardController : Controller
         var totalCount = await _dashboardService.GetTotalCountsAsync();
         var clientStats = await _dashboardService.GetClientStatsAsync(); // appel vers l'API Java
         var ticketStatusCounts = await _dashboardService.GetTicketStatusCountsAsync(); 
-        
-        Console.WriteLine("ticketStatusCounts" + ticketStatusCounts);
+        var leadStatusCounts = await _dashboardService.GetLeadStatusCountsAsync(); 
+
+
         var viewModel = new DashboardViewModel
         {
             TotalCount = totalCount,
             ClientStats = clientStats,
-            TicketStatusCounts = ticketStatusCounts
+            TicketStatusCounts = ticketStatusCounts,
+            LeadStatusCounts = leadStatusCounts
         };
 
         return View(viewModel);

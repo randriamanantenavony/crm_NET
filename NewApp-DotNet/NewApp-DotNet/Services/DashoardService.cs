@@ -58,4 +58,20 @@ public class DashboardService
         return ticketStatusCounts;
     }
 
+      public async Task<List<LeadStatusCountViewModel>> GetLeadStatusCountsAsync()
+    {
+        var response = await _httpClient.GetAsync("http://localhost:8080/api/lead-status/all");
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("contenu" + content);
+
+        var ticketStatusCounts = JsonSerializer.Deserialize<List<LeadStatusCountViewModel>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        return ticketStatusCounts;
+    }
+
 }
