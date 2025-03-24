@@ -1,4 +1,4 @@
-@model TotalCount
+@model DashboardViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,9 +9,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f7fc; /* Couleur de fond douce */
+            background-color: #f4f7fc;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         .container {
@@ -19,62 +19,80 @@
             justify-content: space-around;
             gap: 30px;
             padding: 30px 0;
+            flex-wrap: wrap;
         }
 
         .box {
             width: 30%;
-            padding: 40px;
+            min-width: 250px;
+            padding: 30px;
             text-align: center;
             border-radius: 10px;
             color: white;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce */
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
-        .box:hover {
-            transform: translateY(-10px); /* Animation au survol */
-        }
-
-        .customer {
-            background-color: #74c7a8; /* Couleur verte claire */
-        }
-
-        .ticket {
-            background-color: #ffb400; /* Couleur orange clair */
-        }
-
-        .lead {
-            background-color: #3498db; /* Couleur bleu clair */
-        }
+        .customer { background-color: #74c7a8; }
+        .ticket { background-color: #ffb400; }
+        .lead { background-color: #3498db; }
 
         .box h3 {
             margin: 0;
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .box p {
             margin: 10px 0;
-            font-size: 36px; /* Plus grand pour la valeur */
+            font-size: 32px;
         }
 
         .box .details {
-            font-size: 18px;
+            font-size: 16px;
             color: #f4f4f4;
         }
 
-        .chart-container {
-            width: 60%;
-            height: 450px;
-            margin: 50px auto 0;
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin: 30px 0;
         }
 
-        /* Centrer le texte du graphique */
-        .chart-container canvas {
-            display: block;
-            margin: 0 auto;
+        .chart-wrapper {
+            width: 48%;
+            min-width: 400px;
+            background: white;
+            height: 400px; /* Fixe la hauteur */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Suppression des animations */
+        .box:hover {
+            transform: none;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: calc(100% - 40px); /* 40px pour le titre */
+            position: relative;
+        }
+
+       
     </style>
 </head>
 <body>
@@ -82,79 +100,210 @@
 <div class="container">
     <div class="box customer">
         <h3>Total Customers</h3>
-        <p>@Model.customerCount</p>
+        <p>@Model.TotalCount.customerCount</p>
         <p class="details">Clients enregistrés jusqu'à aujourd'hui</p>
+        <a href="" style="text-decoration: none; color: #f4f7fc;">voir details</a>
     </div>
 
     <div class="box ticket">
         <h3>Total Tickets</h3>
-        <p>@Model.ticketCount</p>
+        <p>@Model.TotalCount.ticketCount</p>
         <p class="details">Tickets générés et en cours de traitement</p>
+        <a href="" style="text-decoration: none; color: #f4f7fc;">voir details</a>
     </div>
 
     <div class="box lead">
         <h3>Total Leads</h3>
-        <p>@Model.leadCount</p>
+        <p>@Model.TotalCount.leadCount</p>
         <p class="details">Leads générés par les campagnes</p>
+        <a href="" style="text-decoration: none; color: #f4f7fc;">voir details</a>
     </div>
 </div>
 
-<!-- Graphique Chart.js -->
-<div class="chart-container">
-    <canvas id="myChart"></canvas>
+<div class="charts-container">
+    <!-- Premier graphique: Totaux -->
+    <div class="chart-wrapper">
+        <div class="chart-title">Statistiques Globales</div>
+        <canvas id="countChart"></canvas>
+    </div>
+
+    <!-- Deuxième graphique: Stats Clients -->
+    <div class="chart-wrapper">
+        <div class="chart-title">Budget vs Dépenses par Client</div>
+        <canvas id="clientStatsChart"></canvas>
+    </div>
+
+    <!-- Troisième graphique: Statut des Tickets -->
+    <div class="chart-wrapper">
+        <div class="chart-title">Statut des Tickets</div>
+        <canvas id="ticketStatusChart"></canvas>
+    </div>
+
+    <!-- Quatrième graphique: Statut des Leads -->
+    <div class="chart-wrapper">
+        <div class="chart-title">Statut des Leads</div>
+        <canvas id="leadStatusChart"></canvas>
+    </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar', // Choisir le type de graphique (barres)
+    // Graphique des totaux
+    var countCtx = document.getElementById('countChart').getContext('2d');
+    new Chart(countCtx, {
+        type: 'bar',
         data: {
-            labels: ['Customers', 'Tickets', 'Leads'], // Les catégories
+            labels: ['Customers', 'Tickets', 'Leads'],
             datasets: [{
-                label: 'Total Count',
-                data: [@Model.customerCount, @Model.ticketCount, @Model.leadCount], // Données dynamiques
-                backgroundColor: [
-                    '#74c7a8', // Couleur verte claire
-                    '#ffb400', // Couleur orange clair
-                    '#3498db'  // Couleur bleu clair
-                ],
-                borderColor: [
-                    '#56b597', // Couleur verte plus foncée
-                    '#e68900', // Couleur orange plus foncée
-                    '#2980b9'  // Couleur bleue plus foncée
-                ],
-                borderWidth: 2
+                label: 'Total',
+                data: [@Model.TotalCount.customerCount, @Model.TotalCount.ticketCount, @Model.TotalCount.leadCount],
+                backgroundColor: ['#74c7a8', '#ffb400', '#3498db'],
+                borderWidth: 1
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        font: {
-                            size: 14
-                        }
-                    }
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Graphique des stats clients
+    var clientCtx = document.getElementById('clientStatsChart').getContext('2d');
+    new Chart(clientCtx, {
+        type: 'bar',
+        data: {
+            labels: [@Html.Raw(string.Join(",", Model.ClientStats.Select(c => $"'{c.name}'")))],
+            datasets: [
+                {
+                    label: 'Budget',
+                    data: [@string.Join(",", Model.ClientStats.Select(c => c.totalBudget))],
+                    backgroundColor: '#74c7a8',
+                    borderWidth: 1
                 },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 16
-                        }
+                {
+                    label: 'Dépenses',
+                    data: [@string.Join(",", Model.ClientStats.Select(c => c.totalDepense))],
+                    backgroundColor: '#ff6b6b',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Montant (€)'
                     }
                 }
             },
             plugins: {
-                legend: {
-                    labels: {
-                        font: {
-                            size: 16
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw.toLocaleString('fr-FR') + ' €';
                         }
                     }
                 }
             }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Données TicketStatus:", @Html.Raw(Json.Serialize(Model.TicketStatusCounts)));
+        
+        // Graphique des statuts de tickets
+        var ticketStatusData = @Html.Raw(Json.Serialize(Model.TicketStatusCounts));
+        if(ticketStatusData && ticketStatusData.length > 0) {
+            var ticketCtx = document.getElementById('ticketStatusChart').getContext('2d');
+            new Chart(ticketCtx, {
+                type: 'pie',
+                data: {
+                    labels: ticketStatusData.map(item => item.status),
+                    datasets: [{
+                        data: ticketStatusData.map(item => item.ticketCount),
+                       backgroundColor: [
+                            '#B3B3FF', // Bleu pastel
+                            '#B3FFFF',
+                            '#FFE0B3', // Jaune pastel
+                            '#E0B3FF', // Violet pastel
+                            '#FFB3B3', // Rouge pastel
+                            '#B3FFB3', // Vert pastel
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw} tickets`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn("Aucune donnée de statut de ticket disponible");
+            document.getElementById('ticketStatusChart').closest('.chart-wrapper').style.display = 'none';
+        }
+
+        // Graphique des statuts de leads
+        var leadStatusData = @Html.Raw(Json.Serialize(Model.LeadStatusCounts));
+        console.log("lead",leadStatusData);
+        if(leadStatusData && leadStatusData.length > 0) {
+            var leadCtx = document.getElementById('leadStatusChart').getContext('2d');
+            new Chart(leadCtx, {
+                type: 'pie',
+                data: {
+                    labels: leadStatusData.map(item => item.status),
+                    datasets: [{
+                        data: leadStatusData.map(item => item.leadCount),
+                        backgroundColor: [
+                            '#FFB3B3', // Rouge pastel
+                            '#B3FFB3', // Vert pastel
+                            '#B3B3FF', // Bleu pastel
+                            '#FFE0B3', // Jaune pastel
+                            '#E0B3FF', // Violet pastel
+                            '#B3FFFF'  // Cyan pastel
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw} leads`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn("Aucune donnée de statut de lead disponible");
+            document.getElementById('leadStatusChart').closest('.chart-wrapper').style.display = 'none';
         }
     });
 </script>

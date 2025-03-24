@@ -92,3 +92,6 @@ E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\obj\Debug\net8.0\refint\..dll
 E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\obj\Debug\net8.0\..pdb
 E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\obj\Debug\net8.0\..genruntimeconfig.cache
 E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\obj\Debug\net8.0\ref\..dll
+E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\obj\Debug\net8.0\..csproj.AssemblyReference.cache
+E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\Studies\S6\crm_NET\NewApp-DotNet\NewApp-DotNet\obj\Debug\net8.0\..csproj.CopyComplete
