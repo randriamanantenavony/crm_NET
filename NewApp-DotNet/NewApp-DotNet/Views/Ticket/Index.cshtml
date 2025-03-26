@@ -3,6 +3,15 @@
 @{
     ViewData["Title"] = "Liste des Tickets";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
 
 <!-- Tableau avec couleurs pastel -->
 <div class="container mt-4">
@@ -19,6 +28,7 @@
                     <th class="text-center">Manager</th>
                     <th class="text-center">Employé</th>
                     <th class="text-center">Client</th>
+                    <th class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +57,18 @@
                         <td class="text-center">@ticket.Manager?.Username</td>
                         <td class="text-center">@ticket.Employee?.Username</td>
                         <td class="text-center">@ticket.Customer?.name</td>
+                         <td class="text-center">
+                            <a href="/Ticket/Edit/@ticket.TicketId" class="btn btn-sm btn-primary" title="Modifier le prix">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                           <form asp-action="DeleteTicket" asp-controller="Ticket" method="post" style="display:inline;">
+                            <input type="hidden" name="ticketId" value="@ticket.TicketId" />
+                            <button type="submit" class="btn btn-sm btn-danger" title="Supprimer le ticket" onclick="return confirm('Voulez-vous vraiment supprimer ce ticket ?');">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -67,3 +89,8 @@
         © 2025 Ticketing System. Tous droits réservés.
     </div>
 </footer>
+
+
+    
+</body>
+</html>

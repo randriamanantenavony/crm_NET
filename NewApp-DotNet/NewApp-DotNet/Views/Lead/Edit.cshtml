@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Modifier le montant du lead";
+    var leadId = ViewBag.LeadId;
+}
+
+<h2>Modifier le montant du lead</h2>
+
+<form method="post" action="/Lead/UpdateLeadMontant">
+    <input type="hidden" name="leadId" value="@leadId" />
+
+    <div class="form-group">
+        <label>Montant</label>
+        <input name="montant" class="form-control" type="number" step="0.01" required />
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Valider</button>
+</form>

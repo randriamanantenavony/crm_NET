@@ -19,7 +19,7 @@
                     <th>Téléphone</th>
                     <th>Manager</th>
                     <th>Client</th>
-                    <th>Créé le</th>
+                    <th>Créé le</th>                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +33,21 @@
                         <td>@lead.Manager?.Username</td>
                         <td>@lead.Customer?.name</td>
                         <td>@lead.CreatedAt.ToString("dd/MM/yyyy")</td>
+                         <td class="text-center">
+                           <a href="/Lead/Edit/@lead.LeadId" class="btn btn-sm btn-primary" title="Modifier le prix">
+                                <i class="fas fa-edit"></i>
+                          </a>
+
+                          <form asp-action="DeleteLead" asp-controller="Lead" method="post" style="display:inline;">
+                            <input type="hidden" name="leadId" value="@lead.LeadId" />
+                            <button type="submit" class="btn btn-sm btn-danger" title="Supprimer le lead" onclick="return confirm('Voulez-vous vraiment supprimer ce lead ?');">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+
+                     </td>
                     </tr>
+                    
                 }
             </tbody>
         </table>
@@ -49,4 +63,5 @@
 
  <a href="http://localhost:5077/Dashboard" class="btn btn-outline-primary shadow-sm">
             ⬅️ Retour au Dashboard
-        </a>
+</a>
+
