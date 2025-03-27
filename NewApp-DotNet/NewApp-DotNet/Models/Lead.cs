@@ -10,5 +10,5 @@ public class Lead
     public User Manager { get; set; } // Assuming Manager is of type User
     public User Employee { get; set; } // Assuming Employee is of type User
     public Customer Customer { get; set; } // Assuming Customer is another class
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 }

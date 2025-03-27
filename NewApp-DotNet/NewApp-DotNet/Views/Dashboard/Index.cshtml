@@ -178,12 +178,7 @@
         data: {
             labels: [@Html.Raw(string.Join(",", Model.ClientStats.Select(c => $"'{c.name}'")))],
             datasets: [
-                {
-                    label: 'Budget',
-                    data: [@string.Join(",", Model.ClientStats.Select(c => c.totalBudget))],
-                    backgroundColor: '#74c7a8',
-                    borderWidth: 1
-                },
+                
                 {
                     label: 'Dépenses',
                     data: [@string.Join(",", Model.ClientStats.Select(c => c.totalDepense))],
