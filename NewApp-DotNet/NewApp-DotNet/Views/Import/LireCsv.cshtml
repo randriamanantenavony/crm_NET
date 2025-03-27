@@ -1,0 +1,14 @@
+@model List<string[]>
+
+<h2>Contenu du CSV</h2>
+<table border="1">
+    @foreach (var ligne in Model)
+    {
+        <tr>
+            @foreach (var colonne in ligne)
+            {
+                <td>@colonne</td>
+            }
+        </tr>
+    }
+</table>

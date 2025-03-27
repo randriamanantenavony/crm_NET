@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZCVj8mdD8fjGZpe+wi0kuUoMPmRSdWH1NoNZEugSCBM=",
+  "Hash": "qCaDqSXsMtk6AhtstP7pmBeFGdmTzAQxpKzXN5eQ+OY=",
   "Source": ".",
   "BasePath": "_content/.",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\wwwroot\\fichiers\\import.csv",
+      "SourceId": ".",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\wwwroot\\",
+      "BasePath": "_content/.",
+      "RelativePath": "fichiers/import.csv",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\fichiers\\import.csv"
     },
     {
       "Identity": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\wwwroot\\js\\site.js",

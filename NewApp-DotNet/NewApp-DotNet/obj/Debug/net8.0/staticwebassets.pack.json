@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\wwwroot\\fichiers\\import.csv",
+      "PackagePath": "staticwebassets\\fichiers\\import.csv"
+    },
+    {
       "Id": "E:\\Studies\\S6\\crm_NET\\NewApp-DotNet\\NewApp-DotNet\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
